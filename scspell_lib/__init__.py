@@ -368,7 +368,7 @@ def handle_failed_check_non_interactive(match_desc, filename, file_id, unmatched
     for i in range( len( unmatched_subtokens ) ):
         find = unmatched_subtokens[i]
         replace = BOLD_START + find + BOLD_END
-        line = line.replace( find, replace )
+        line = re.sub( find, replace, line,  flags=re.IGNORECASE )
 
     print "%s:%u: '%s'" % (filename, line_num, line )
 

@@ -1,10 +1,10 @@
 Metadata-Version: 1.0
 Name: scspell
-Version: 0.1.0
-Summary: A conservative interactive spell checker for source code.
+Version: 0.2.0
+Summary: A conservative interactive and non-interactive spell checker for source code.
 Home-page: http://launchpad.net/scspell
-Author: Paul Pelzl
-Author-email: pelzlpj@gmail.com
+Authors: Paul Pelzl, RIKSOF (Private) Limited
+Author-email: pelzlpj@gmail.com, info@riksof.com
 License: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Description: **scspell** is a spell checker for source code.  It does not try to be
         particularly smart--rather, it does the simplest thing that can possibly work:
