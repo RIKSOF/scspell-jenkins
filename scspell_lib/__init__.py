@@ -39,8 +39,11 @@ LEN_THRESHOLD = 3               # Subtokens shorter than 4 characters are likely
 CTRL_C = '\x03'                 # Special key codes returned from getch()
 CTRL_D = '\x04'
 CTRL_Z = '\x1a'
-BOLD_START = '\033[91m'
-BOLD_END = '\033[0m'
+ITALIC_START = '<i>'
+ITALIC_END = '</i>'
+BOLD_START = '<b>'
+BOLD_END = '</b>'
+NEW_LINE = '<br />'
 
 USER_DATA_DIR    = _portable.get_data_dir('scspell')
 DICT_DEFAULT_LOC = os.path.join(USER_DATA_DIR, 'dictionary.txt')
@@ -370,7 +373,7 @@ def handle_failed_check_non_interactive(match_desc, filename, file_id, unmatched
         replace = BOLD_START + find + BOLD_END
         line = re.sub( find, replace, line,  flags=re.IGNORECASE )
 
-    print "%s:%u: '%s'" % (filename, line_num, line )
+    print "%s%s:%u%s '%s'" % (ITALIC_START, filename, line_num, ITALIC_END, line )
 
     return (match_desc.get_string(), match_desc.get_ofs() + len(match_desc.get_token()))
 
