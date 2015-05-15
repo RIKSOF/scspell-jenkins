@@ -155,6 +155,11 @@ class PrefixMatchCorpus(Corpus):
         else:
             return False
 
+    def addList(self, tokens):
+        """Add the specified tokens to this Corpus."""
+        self._tokens = sorted( self._tokens + tokens )
+        self._mark_dirty()
+
     def add(self, token):
         """Add the specified token to this Corpus."""
         insertion_point = bisect_left(self._tokens, token)
@@ -185,6 +190,9 @@ class CorporaFile(object):
         self._extensions     = {}       # Associates each extension with a file-type dictionary
         self._fileids        = {}       # Associates each file-id with a file-specific dictionary
 
+        return self.add_dictionary_file( filename )
+
+    def add_dictionary_file(self, filename):
         try:
             with open(filename, 'rb') as f:
                 lines = [line.strip(' \r\n') for line in f.readlines()]
@@ -334,9 +342,14 @@ class CorporaFile(object):
         offset, tokens      = self._read_corpus_tokens(offset, lines)
 
         if dict_type == DICT_TYPE_NATURAL:
-            self._natural_dict = PrefixMatchCorpus(DICT_TYPE_NATURAL, metadata, tokens)
-            mutter(VERBOSITY_DEBUG, '(Loaded natural language dictionary with %u tokens.)' %
+
+            if self._natural_dict is None:
+                self._natural_dict = PrefixMatchCorpus(DICT_TYPE_NATURAL, metadata, tokens)
+                mutter(VERBOSITY_DEBUG, '(Loaded natural language dictionary with %u tokens.)' %
                     len(tokens))
+            else:
+                self._natural_dict.addList( tokens )
+
             return offset
 
         if dict_type == DICT_TYPE_FILETYPE:
@@ -394,9 +407,7 @@ class CorporaFile(object):
             if metadata != '':
                 raise ParsingError('Dictionary header "%s" on line %u has nonempty metadata.' %
                         (DICT_TYPE_NATURAL, line_num))
-            if self._natural_dict is not None:
-                raise ParsingError('Duplicate dictionary type "%s" on line %u.' %
-                        (DICT_TYPE_NATURAL, line_num))
+
             return (dict_type, None)
 
         if dict_type == DICT_TYPE_FILETYPE:

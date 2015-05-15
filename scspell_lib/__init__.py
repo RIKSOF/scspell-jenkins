@@ -527,7 +527,7 @@ def export_dictionary(filename):
     shutil.copyfile(locate_dictionary(), filename)
 
     
-def spell_check(source_filenames, override_dictionary=None, non_interactive=False):
+def spell_check(source_filenames, override_dictionary=None, additional_filename=None, non_interactive=False):
     """Run the interactive spell checker on the set of source_filenames.
     
     If override_dictionary is provided, it shall be used as a dictionary
@@ -538,7 +538,11 @@ def spell_check(source_filenames, override_dictionary=None, non_interactive=Fals
     verify_user_data_dir()
     dict_file = locate_dictionary() if override_dictionary is None else override_dictionary
     dict_file = os.path.expandvars(os.path.expanduser(dict_file))
+
     with CorporaFile(dict_file) as dicts:
+        if additional_filename is not None:
+            dicts.add_dictionary_file( additional_filename )
+
         ignores = set()
         for f in source_filenames:
             spell_check_file(f, dicts, ignores, non_interactive)

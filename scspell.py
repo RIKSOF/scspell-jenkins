@@ -55,6 +55,9 @@ parser.add_option('-D', '--debug', dest='debug', action='store_true',
         help='print extra debugging information')
 parser.add_option('-n', '--non-interactive', dest='non_interactive', action='store_true',
         help='run in non interactive mode')
+parser.add_option('--additional-dictionary', dest='additional_filename',
+        help='location of additional dictionary FILE, for current session only',
+        metavar='FILE', action='store')
 
 
 (opts, args) = parser.parse_args()
@@ -72,7 +75,7 @@ elif len(args) < 1:
     parser.print_help()
     sys.exit(1)
 else:
-	scspell_lib.spell_check(args, opts.override_filename, opts.non_interactive)
+	scspell_lib.spell_check(args, opts.override_filename, opts.additional_filename, opts.non_interactive)
    
 
 # scspell-id: 285634e7-e5de-4e95-accc-ba639be2834e
