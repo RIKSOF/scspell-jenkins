@@ -53,6 +53,8 @@ parser.add_option('-i', '--gen-id', dest='gen_id', action='store_true',
         help='generate a unique file-id string')
 parser.add_option('-D', '--debug', dest='debug', action='store_true',
         help='print extra debugging information')
+parser.add_option('-n', '--non-interactive', dest='non_interactive', action='store_true',
+        help='run in non interactive mode')
 
 
 (opts, args) = parser.parse_args()
@@ -70,7 +72,7 @@ elif len(args) < 1:
     parser.print_help()
     sys.exit(1)
 else:
-	scspell_lib.spell_check(args, opts.override_filename)
+	scspell_lib.spell_check(args, opts.override_filename, opts.non_interactive)
    
 
 # scspell-id: 285634e7-e5de-4e95-accc-ba639be2834e

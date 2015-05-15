@@ -39,6 +39,8 @@ LEN_THRESHOLD = 3               # Subtokens shorter than 4 characters are likely
 CTRL_C = '\x03'                 # Special key codes returned from getch()
 CTRL_D = '\x04'
 CTRL_Z = '\x1a'
+BOLD_START = '\033[91m'
+BOLD_END = '\033[0m'
 
 USER_DATA_DIR    = _portable.get_data_dir('scspell')
 DICT_DEFAULT_LOC = os.path.join(USER_DATA_DIR, 'dictionary.txt')
@@ -344,8 +346,35 @@ def handle_failed_check(match_desc, filename, file_id, unmatched_subtokens, dict
     # Default: text is unchanged
     return (match_desc.get_string(), match_desc.get_ofs() + len(match_desc.get_token()))
 
+def handle_failed_check_non_interactive(match_desc, filename, file_id, unmatched_subtokens, dicts, ignores):
+    """Handle a token which failed the spell check operation. We just show output and continue
 
-def spell_check_token(match_desc, filename, file_id, dicts, ignores):
+    :param match_desc: description of the token matching instance
+    :type  match_desc: MatchDescriptor
+    :param filename: name of file containing the token
+    :param file_id: unique identifier for current file
+    :type  file_id: string or None
+    :param unmatched_subtokens: sequence of subtokens, each of which failed spell check
+    :param dicts: dictionary set against which to perform matching
+    :type  dicts: CorporaFile
+    :param ignores: set of tokens to ignore for this session
+    :returns: (text, ofs) where ``text`` is the (possibly modified) source contents and
+            ``ofs`` is the byte offset within the text where searching shall resume.
+    """
+    lines = match_desc.get_string().splitlines()
+    line_num = match_desc.get_line_num()
+    line = lines[ line_num - 1 ]
+
+    for i in range( len( unmatched_subtokens ) ):
+        find = unmatched_subtokens[i]
+        replace = BOLD_START + find + BOLD_END
+        line = line.replace( find, replace )
+
+    print "%s:%u: '%s'" % (filename, line_num, line )
+
+    return (match_desc.get_string(), match_desc.get_ofs() + len(match_desc.get_token()))
+
+def spell_check_token(match_desc, filename, file_id, dicts, ignores, non_interactive):
     """Spell check a single token.
 
     :param match_desc: description of the token matching instance
@@ -367,12 +396,17 @@ def spell_check_token(match_desc, filename, file_id, dicts, ignores):
                                        and (st not in ignores)]
         if unmatched_subtokens != []:
             unmatched_subtokens = make_unique(unmatched_subtokens)
-            return handle_failed_check(match_desc, filename, file_id, unmatched_subtokens,
+            if non_interactive == True:
+                return handle_failed_check_non_interactive(match_desc, filename, file_id, unmatched_subtokens,
                     dicts, ignores)
+            else:
+                return handle_failed_check(match_desc, filename, file_id, unmatched_subtokens,
+                    dicts, ignores)
+
     return (match_desc.get_string(), match_desc.get_ofs() + len(token))
 
 
-def spell_check_file(filename, dicts, ignores):
+def spell_check_file(filename, dicts, ignores, non_interactive):
     """Spell check a single file.
 
     :param filename: name of the file to check
@@ -407,7 +441,7 @@ def spell_check_file(filename, dicts, ignores):
             # This is matching the file-id.  Skip over it.
             pos = m_id.end()
             continue
-        data, pos = spell_check_token(MatchDescriptor(data, m), filename, file_id, dicts, ignores)
+        data, pos = spell_check_token(MatchDescriptor(data, m), filename, file_id, dicts, ignores, non_interactive)
 
     # Write out the source file if it was modified
     if data != source_text:
@@ -493,7 +527,7 @@ def export_dictionary(filename):
     shutil.copyfile(locate_dictionary(), filename)
 
     
-def spell_check(source_filenames, override_dictionary=None):
+def spell_check(source_filenames, override_dictionary=None, non_interactive=False):
     """Run the interactive spell checker on the set of source_filenames.
     
     If override_dictionary is provided, it shall be used as a dictionary
@@ -507,7 +541,7 @@ def spell_check(source_filenames, override_dictionary=None):
     with CorporaFile(dict_file) as dicts:
         ignores = set()
         for f in source_filenames:
-            spell_check_file(f, dicts, ignores)
+            spell_check_file(f, dicts, ignores, non_interactive)
 
 
 __all__ = [
