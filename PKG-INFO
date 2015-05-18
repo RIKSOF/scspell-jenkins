@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: scspell
-Version: 0.2.2
+Version: 0.2.3
 Summary: A conservative interactive and non-interactive spell checker for source code.
 Home-page: http://launchpad.net/scspell
 Authors: Paul Pelzl, RIKSOF (Private) Limited

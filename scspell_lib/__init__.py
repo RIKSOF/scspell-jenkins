@@ -44,6 +44,8 @@ ITALIC_END = '</i>'
 BOLD_START = '<b>'
 BOLD_END = '</b>'
 NEW_LINE = '<br />'
+ENCODED_TEXT_START = '<![CDATA['
+ENCODED_TEXT_END = ']]>'
 
 USER_DATA_DIR    = _portable.get_data_dir('scspell')
 DICT_DEFAULT_LOC = os.path.join(USER_DATA_DIR, 'dictionary.txt')
@@ -373,7 +375,8 @@ def handle_failed_check_non_interactive(match_desc, filename, file_id, unmatched
         replace = BOLD_START + find + BOLD_END
         line = re.sub( find, replace, line,  flags=re.IGNORECASE )
 
-    print "%s%s:%u%s %s%s" % (ITALIC_START, filename, line_num, ITALIC_END, line, NEW_LINE )
+    print "%s%s:%u%s %s%s%s%s" % (ITALIC_START, filename, line_num, ITALIC_END, ENCODED_TEXT_START, line,
+                                  ENCODED_TEXT_END, NEW_LINE )
 
     return (match_desc.get_string(), match_desc.get_ofs() + len(match_desc.get_token()))
 
