@@ -372,9 +372,9 @@ def handle_failed_check_non_interactive(match_desc, filename, file_id, unmatched
     for i in range( len( unmatched_subtokens ) ):
         find = unmatched_subtokens[i]
         replace = BOLD_START + find + BOLD_END
-        line = re.sub( find, replace, line,  flags=re.IGNORECASE )
+        line = re.sub( find, replace, cgi.escape( line ),  flags=re.IGNORECASE )
 
-    print "%s%s:%u%s %s%s" % (ITALIC_START, filename, line_num, ITALIC_END, cgi.escape( line ),
+    print "%s%s:%u%s %s%s" % (ITALIC_START, filename, line_num, ITALIC_END, line,
                                   NEW_LINE )
 
     return (match_desc.get_string(), match_desc.get_ofs() + len(match_desc.get_token()))
