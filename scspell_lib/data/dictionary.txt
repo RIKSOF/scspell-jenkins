@@ -273,7 +273,7 @@ wostream
 wprintf
 wscanf
 
-FILETYPE: HTML; .html, .htm, .js
+FILETYPE: HTML; .html, .htm, .js, .xml
 ajax
 apache
 attrs
