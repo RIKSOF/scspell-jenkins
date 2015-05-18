@@ -33,7 +33,7 @@ from _corpus import CorporaFile
 from _util import *
 
 
-VERSION = '0.1.0'
+VERSION = '0.2.6'
 CONFIG_SECTION = 'Settings'     # Name of scspell.conf section header
 CONTEXT_SIZE  = 4               # Size of context printed upon request
 LEN_THRESHOLD = 3               # Subtokens shorter than 4 characters are likely to be abbreviations

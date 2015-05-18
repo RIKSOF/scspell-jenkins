@@ -273,6 +273,26 @@ wostream
 wprintf
 wscanf
 
+FILETYPE: HTML; .html, .htm, .js
+ajax
+apache
+attrs
+autocapitalize
+charset
+doctype
+href
+http
+https
+javascript
+jquery
+nbsp
+onload
+stylesheet
+substring
+textarea
+viewport
+xmlns
+
 FILETYPE: Python; .py, .pyw
 abspath
 altsep
@@ -26444,6 +26464,7 @@ engineerings
 engineers
 engines
 engining
+english
 engorge
 engorged
 engorgement
@@ -31846,6 +31867,8 @@ friction
 frictional
 frictionless
 frictions
+friday
+fridays
 fridge
 fridges
 fried
@@ -33480,6 +33503,7 @@ gists
 git
 gite
 gites
+github
 gits
 give
 giveaway
@@ -41627,6 +41651,7 @@ interned
 internee
 internees
 internes
+internet
 interning
 internist
 internists
@@ -42119,8 +42144,10 @@ ionospheric
 ions
 iota
 iotas
+ipad
 ipecac
 ipecacs
+iphone
 irascibility
 irascibilitys
 irascible
@@ -49956,6 +49983,7 @@ monasticism
 monasticisms
 monastics
 monaural
+monday
 monetarily
 monetarism
 monetarist
@@ -59040,6 +59068,8 @@ plugged
 plugging
 plughole
 plugholes
+plugin
+plugins
 plugs
 plum
 plumage
@@ -69202,6 +69232,7 @@ saturates
 saturating
 saturation
 saturations
+saturday
 saturnalia
 saturnine
 satyr
@@ -77823,6 +77854,7 @@ sunbursts
 suncream
 sundae
 sundaes
+sunday
 sundeck
 sundecks
 sunder
@@ -80739,6 +80771,7 @@ thunderstorm
 thunderstorms
 thunderstruck
 thundery
+thursday
 thus
 thwack
 thwacked
@@ -82998,6 +83031,7 @@ tulip
 tulips
 tulle
 tulles
+tuesday
 tum
 tumble
 tumbled
@@ -85584,6 +85618,8 @@ unstrung
 unstuck
 unstudied
 unsubdued
+unsubscribe
+unsubscribed
 unsubsidized
 unsubstantial
 unsubstantiated
@@ -88264,6 +88300,7 @@ wedgiest
 wedging
 wedlock
 wedlocks
+wednesday
 weds
 wee
 weed
@@ -90338,4 +90375,3 @@ zygote
 zygotes
 zygotic
 zymurgy
-
